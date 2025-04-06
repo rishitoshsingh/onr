@@ -79,33 +79,6 @@ class BreakItBad:
         # Implement logic to find nodes using Selenium
         nodes = self.driver.find_elements_by_class_name('node')
         return nodes
-    
-    # def find_edges(self):
-    #     # Implement logic to find edges using Selenium
-    #     # edges = self.driver.execute_script(f"return document.querySelectorAll('{self.EDGE_SELECTOR}');")
-    #     WebDriverWait(self.driver, 5).until(
-    #         lambda driver: driver.find_element(By.TAG_NAME, "g").is_displayed()
-    #     )
-    #     self.initiliaze_edges()
-    #     map = self.driver.find_element(By.TAG_NAME, 'g')
-    #     edges = map.find_elements(By.TAG_NAME, 'path')
-    #     try: 
-    #         for edge in edges:
-    #             attr = edge.get_attribute('stroke')
-    #             if "on forward" in attr or "on reverse" in attr:
-    #                 self.not_attacked_edges.append(edge)
-    #             elif "off" in attr:
-    #                 self.attacked_edges.append(edge)
-    #             elif "on stopped" in attr:
-    #                 self.off_edges.append(edge)
-    #     except Exception as e:
-    #         print(f"Error while finding edges: {e}")
-    #         self.find_edges_tries += 1
-    #         if self.find_edges_tries < self.MAX_FIND_EDGES_TRIES:
-    #             self.find_edges()
-    #         else:
-    #             raise e
-    #     self.find_edges_tries = 0
 
     def get_score(self):
         # Implement logic to find scoreboard using Selenium
