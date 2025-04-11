@@ -32,6 +32,9 @@ class Edge:
             return "stopped"
         else:
             return "not_attacked"
+    
+    def get_edge_from_to(self):
+        return f"{self.from_node} <-> {self.to_node}"
 
     def __repr__(self):
         return f"Edge({self.from_node}->{self.to_node}, id={self.id}, state={self.state}, on_off={self.on_off}, temperature={self.temperature}, flow={self.flow}, fci={self.fci})"

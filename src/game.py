@@ -26,13 +26,15 @@ class BreakItBad:
 
     MAX_FIND_EDGES_TRIES = 3
 
-    def __init__(self, driver: WebDriver, intelligence: str, game_url: str):
+    def __init__(self, driver: WebDriver, intelligence: str, game_url: str, edge_detailed_state: bool, node_detailed_state: bool):
         self.driver = driver
         self.game_url = game_url
         self.reset_game(first_run=True)
         self.initiliaze_edges_nodes()
         self.find_state_tries = 0
         self.intelligence = intelligence
+        self.edge_detailed_state = edge_detailed_state
+        self.node_detailed_state = node_detailed_state
         
     
     def reset_game(self, first_run=False):
@@ -100,6 +102,7 @@ class BreakItBad:
             EC.invisibility_of_element_located((By.CLASS_NAME, 'p-dialog'))
         )
         time.sleep(1)
+        return edge
     
     def is_game_over(self):
         # Implement logic to check if the game is over using Selenium
@@ -195,9 +198,11 @@ class BreakItBad:
         try:
             self.initiliaze_edges_nodes()
             self.find_nodes()
-            self.find_nodes_state()
+            if self.node_detailed_state:
+                self.find_nodes_state()
             self.find_edges()
-            self.find_edges_state()
+            if self.edge_detailed_state:
+                self.find_edges_state()
             self.filter_edges()
         except:
             print("Error while getting state")
@@ -205,6 +210,8 @@ class BreakItBad:
                 self.find_state_tries += 1
                 print(f"Retrying to find state {self.find_state_tries}/{self.MAX_FIND_EDGES_TRIES}")
                 time.sleep(2)
+            else:
+                raise
             self.get_state()
         self.find_state_tries = 0
 
