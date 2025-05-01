@@ -1,11 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-import config.breakitbad as config
+import config.saveoursystem1 as config
 print(f"PLaying as {config.BOT_INTELLIGENCE} bot")
 
 
-from src.game import BreakItBad
+from src.game import SaveOurSystem
 import src.utils.metrics as metrics
 from src.utils import save_trials_to_csv
 
@@ -19,8 +19,9 @@ if config.HEADDLESS_MODE:
 # Set up the Chrome driver
 service = Service(config.CHROME_DRIVER_PATH)
 driver = webdriver.Chrome(service=service, options=chrome_options)
+config.TRIALS_HISTORY_PATH = "_".join([config.TRIALS_HISTORY_PATH.split(".")[0], config.BOT_INTELLIGENCE])+".csv"
 
-game = BreakItBad(driver, config.BOT_INTELLIGENCE, config.GAME_URL, config.EDGE_DETAILED_STATE, config.NODE_DETAILED_STATE)
+game = SaveOurSystem(driver, config.BOT_INTELLIGENCE, config.GAME_URL, config.EDGE_DETAILED_STATE, config.NODE_DETAILED_STATE, config.RANDOM_THRESHOLD_ACTION)
 game.login()
 
 import os
@@ -38,19 +39,19 @@ for i in range(config.NUM_TRIALS):
     current_moves, current_scoreboard = [], []
     game.start_game()
     # game.get_state()
-    for i in range(config.ATTACKS_ALLOWED):
+    for i in range(config.TURNS_ALLOWED):
         game.get_state()
-        edge = game.action()
+        actions = game.action()
         score = game.get_score()
-        current_moves.append(edge.get_edge_from_to())
+        current_moves.append(actions)
         current_scoreboard.append(score)
-        if (game.is_game_over()):
-            break
-    current_scoreboard = current_scoreboard + [None] * (config.MAX_ATTACKS - len(current_scoreboard))
-    current_moves = current_moves + [None] * (config.MAX_ATTACKS - len(current_moves))
+        # if (game.is_game_over()):
+        #     break
+    current_scoreboard = current_scoreboard + [None] * (config.MAX_TURNS - len(current_scoreboard))
+    current_moves = current_moves + [None] * (config.MAX_TURNS - len(current_moves))
     trial_record = current_moves + current_scoreboard
-    save_trials_to_csv(trial_record, config.TRIALS_HISTORY_PATH)
+    save_trials_to_csv(trial_record, config.TRIALS_HISTORY_PATH, sep=";")
     game.reset_game()
 
 # Ensure the file is properly closed before analyzing
-metrics.analyze_scoreboard(config.TRIALS_HISTORY_PATH, config.ATTACKS_ALLOWED)
+metrics.analyze_scoreboard_save_our_system(config.TRIALS_HISTORY_PATH)

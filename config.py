@@ -8,7 +8,7 @@ HEADDLESS_MODE = True
 GAME_URL = 'https://dysruption.net/scenario/8857adb7-42ff-4c4f-8ca3-1693aa830367/0'  # Update with the actual game URL
 
 # GAME CONFIG
-NUM_TRIALS = 50
+NUM_TRIALS = 500
 MAX_ATTACKS = 17
 ATTACKS_ALLOWED = 5
 # DETAILED_STATE = False  # Set to True for detailed state information

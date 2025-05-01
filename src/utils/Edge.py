@@ -23,7 +23,7 @@ class Edge:
         self.flow = int(flow)
 
     def set_fci(self, fci):
-        self.fci = int(fci)
+        self.fci = float(fci)
 
     def get_status(self):
         if not self.on_off:

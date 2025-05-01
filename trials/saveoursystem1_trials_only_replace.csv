@@ -1,0 +1,28 @@
+Move_1;Move_2;Move_3;Move_4;Move_5;Move_6;Move_7;Move_8;Move_9;Move_10;Score_1;Score_2;Score_3;Score_4;Score_5;Score_6;Score_7;Score_8;Score_9;Score_10
+['REPLACE: 2 <-> 1', 'REPLACE: 7 <-> 3'];[];['REPLACE: 12 <-> 8'];[];['REPLACE: 8 <-> 4'];['REPLACE: 2 <-> 1'];[];['REPLACE: 12 <-> 8'];[];['REPLACE: 7 <-> 6'];0;1;1;1;1;1;1;1;1;1
+['REPLACE: 12 <-> 8', 'REPLACE: 8 <-> 4'];[];['REPLACE: 7 <-> 6'];[];['REPLACE: 5 <-> 9'];['REPLACE: 2 <-> 1'];[];['REPLACE: 12 <-> 8'];[];['REPLACE: 4 <-> 1'];1;1;1;1;1;1;1;1;1;1
+['REPLACE: 2 <-> 3', 'REPLACE: 7 <-> 3'];[];['REPLACE: 5 <-> 9'];[];['REPLACE: 9 <-> 12'];['REPLACE: 2 <-> 1'];[];['REPLACE: 12 <-> 8'];[];['REPLACE: 9 <-> 12'];3;6;9;12;13;13;13;13;13;13
+['REPLACE: 5 <-> 9', 'REPLACE: 11 <-> 7'];[];['REPLACE: 2 <-> 1'];[];['REPLACE: 2 <-> 1'];['REPLACE: 6 <-> 5'];[];['REPLACE: 2 <-> 1'];[];['REPLACE: 9 <-> 12'];0;4;5;5;5;5;5;5;5;5
+['REPLACE: 12 <-> 8', 'REPLACE: 2 <-> 3'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 7 <-> 3'];['REPLACE: 9 <-> 12'];[];['REPLACE: 11 <-> 7'];[];['REPLACE: 14 <-> 13'];3;6;9;12;13;14;15;16;17;18
+['REPLACE: 11 <-> 7', 'REPLACE: 12 <-> 8'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 2 <-> 3'];['REPLACE: 14 <-> 13'];[];['REPLACE: 5 <-> 9'];[];['REPLACE: 7 <-> 3'];0;4;5;6;7;7;7;7;7;7
+['REPLACE: 13 <-> 12', 'REPLACE: 14 <-> 13'];[];['REPLACE: 10 <-> 14'];[];['REPLACE: 10 <-> 11'];['REPLACE: 2 <-> 3'];[];['REPLACE: 8 <-> 4'];[];['REPLACE: 8 <-> 4'];3;6;9;12;13;14;15;15;15;15
+['REPLACE: 13 <-> 12', 'REPLACE: 6 <-> 5'];[];['REPLACE: 13 <-> 12'];[];['REPLACE: 13 <-> 12'];['REPLACE: 8 <-> 4'];[];['REPLACE: 11 <-> 7'];[];['REPLACE: 7 <-> 6'];3;4;5;6;6;6;6;6;6;6
+['REPLACE: 4 <-> 5', 'REPLACE: 11 <-> 7'];[];['REPLACE: 2 <-> 1'];[];['REPLACE: 7 <-> 6'];['REPLACE: 8 <-> 4'];[];['REPLACE: 6 <-> 5'];[];['REPLACE: 9 <-> 12'];3;4;4;4;4;4;4;5;6;7
+['REPLACE: 5 <-> 9', 'REPLACE: 7 <-> 6'];[];['REPLACE: 10 <-> 14'];[];['REPLACE: 2 <-> 1'];['REPLACE: 12 <-> 8'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 13 <-> 12'];3;4;5;6;7;7;7;7;7;7
+['REPLACE: 4 <-> 5', 'REPLACE: 2 <-> 1'];[];['REPLACE: 4 <-> 5'];[];['REPLACE: 6 <-> 5'];['REPLACE: 6 <-> 5'];[];['REPLACE: 10 <-> 11'];[];['REPLACE: 2 <-> 3'];3;4;5;5;5;5;5;5;5;5
+['REPLACE: 9 <-> 12', 'REPLACE: 12 <-> 8'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 7 <-> 6'];['REPLACE: 11 <-> 7'];[];['REPLACE: 6 <-> 5'];[];['REPLACE: 9 <-> 10'];3;4;4;4;4;4;4;4;4;4
+['REPLACE: 2 <-> 1', 'REPLACE: 7 <-> 6'];[];['REPLACE: 10 <-> 11'];[];['REPLACE: 2 <-> 3'];['REPLACE: 8 <-> 4'];[];['REPLACE: 13 <-> 12'];[];['REPLACE: 7 <-> 6'];3;4;5;6;6;6;6;6;6;6
+['REPLACE: 2 <-> 3', 'REPLACE: 10 <-> 11'];[];['REPLACE: 7 <-> 6'];[];['REPLACE: 4 <-> 1'];['REPLACE: 7 <-> 3'];[];['REPLACE: 10 <-> 11'];[];['REPLACE: 12 <-> 8'];1;2;2;2;2;2;2;2;2;2
+['REPLACE: 2 <-> 1', 'REPLACE: 11 <-> 7'];[];['REPLACE: 14 <-> 13'];[];['REPLACE: 12 <-> 8'];['REPLACE: 4 <-> 5'];[];['REPLACE: 14 <-> 13'];[];['REPLACE: 9 <-> 12'];1;1;1;1;1;1;1;1;1;1
+['REPLACE: 10 <-> 11', 'REPLACE: 4 <-> 5'];[];['REPLACE: 13 <-> 12'];[];['REPLACE: 7 <-> 6'];['REPLACE: 2 <-> 3'];[];['REPLACE: 11 <-> 7'];[];['REPLACE: 8 <-> 4'];0;6;9;10;11;12;13;14;15;15
+['REPLACE: 11 <-> 7', 'REPLACE: 10 <-> 14'];[];['REPLACE: 2 <-> 3'];[];['REPLACE: 12 <-> 8'];['REPLACE: 14 <-> 13'];[];['REPLACE: 2 <-> 3'];[];['REPLACE: 8 <-> 4'];3;6;9;10;10;11;12;13;13;13
+['REPLACE: 11 <-> 7', 'REPLACE: 7 <-> 3'];[];['REPLACE: 2 <-> 3'];[];['REPLACE: 7 <-> 3'];['REPLACE: 4 <-> 1'];[];['REPLACE: 2 <-> 3'];[];['REPLACE: 9 <-> 10'];1;2;3;3;4;5;5;5;5;5
+['REPLACE: 13 <-> 12', 'REPLACE: 9 <-> 12'];[];['REPLACE: 9 <-> 12'];[];['REPLACE: 9 <-> 12'];['REPLACE: 13 <-> 12'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 2 <-> 1'];0;0;0;0;0;0;0;0;0;0
+['REPLACE: 5 <-> 9', 'REPLACE: 7 <-> 3'];[];['REPLACE: 9 <-> 12'];[];['REPLACE: 4 <-> 5'];['REPLACE: 5 <-> 9'];[];['REPLACE: 5 <-> 9'];[];['REPLACE: 9 <-> 10'];0;2;3;4;5;6;6;6;6;6
+['REPLACE: 14 <-> 13', 'REPLACE: 10 <-> 11'];[];['REPLACE: 2 <-> 1'];[];['REPLACE: 12 <-> 8'];['REPLACE: 8 <-> 4'];[];['REPLACE: 9 <-> 10'];[];['REPLACE: 6 <-> 5'];3;4;5;6;7;8;8;8;8;8
+['REPLACE: 7 <-> 6', 'REPLACE: 4 <-> 1'];[];['REPLACE: 10 <-> 14'];[];['REPLACE: 4 <-> 1'];['REPLACE: 11 <-> 7'];[];['REPLACE: 9 <-> 12'];[];['REPLACE: 9 <-> 10'];1;2;3;4;4;4;4;4;4;4
+['REPLACE: 9 <-> 12', 'REPLACE: 5 <-> 9'];[];['REPLACE: 2 <-> 3'];[];['REPLACE: 2 <-> 3'];['REPLACE: 2 <-> 3'];[];['REPLACE: 8 <-> 4'];[];['REPLACE: 11 <-> 7'];3;4;5;6;7;7;7;8;9;10
+['REPLACE: 6 <-> 5', 'REPLACE: 2 <-> 3'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 14 <-> 13'];['REPLACE: 4 <-> 5'];[];['REPLACE: 6 <-> 5'];[];['REPLACE: 9 <-> 12'];3;6;9;12;15;18;19;20;20;20
+['REPLACE: 10 <-> 14', 'REPLACE: 9 <-> 10'];[];['REPLACE: 6 <-> 5'];[];[];['REPLACE: 12 <-> 8', 'REPLACE: 4 <-> 1'];[];['REPLACE: 11 <-> 7'];[];['REPLACE: 14 <-> 13'];1;2;3;4;4;5;6;7;7;7
+['REPLACE: 4 <-> 5', 'REPLACE: 12 <-> 8'];[];['REPLACE: 11 <-> 7'];[];['REPLACE: 4 <-> 1'];['REPLACE: 14 <-> 13'];[];['REPLACE: 9 <-> 12'];[];['REPLACE: 4 <-> 1'];1;2;5;8;9;9;9;9;9;9
+['REPLACE: 4 <-> 1', 'REPLACE: 4 <-> 5'];[];['REPLACE: 5 <-> 9'];[];['REPLACE: 9 <-> 12'];['REPLACE: 5 <-> 9'];[];['REPLACE: 4 <-> 1'];[];['REPLACE: 10 <-> 11'];1;2;3;4;4;4;4;4;4;4
