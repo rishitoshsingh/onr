@@ -22,7 +22,8 @@ NODE_DETAILED_STATE = False
 # BOT_INTELLIGENCE = "only_repair"
 BOT_INTELLIGENCE = "weighted_random"
 
-import random
-random_threshold_actions = [0.3, 0.5, 0.7]
+# random_threshold_actions = [0.3, 0.5, 0.7]
+# import random
 # RANDOM_THRESHOLD_ACTION = random.choice(random_threshold_actions)
+# 30% chace the bot will take a random action
 RANDOM_THRESHOLD_ACTION = 0.3

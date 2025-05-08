@@ -1,7 +1,11 @@
-# onr Project
+# onr
 
 ## Overview
-The onr project is a Python application designed to [briefly describe the purpose of the application, e.g., "process data", "provide a web service", etc.]. 
+The onr project is a Python application designed to determine the best actions to take to maintain an oil pipeline network. This project was developed as part of a funded Office of Naval Research research initiative led by Dr. Thomas Seager.
+
+## Result
+![Tab Save Our System](report/images/tabsaveoursystem.png)
+
 
 ## Installation
 To install the required dependencies, run the following command:
