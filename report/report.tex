@@ -1,5 +1,5 @@
-\documentclass[12pt,a4paper]{article}
-
+\documentclass[12pt,a4paper]{report}
+\usepackage[affil-it]{authblk}
 % Packages
 \usepackage[utf8]{inputenc}
 \usepackage{dirtree}
@@ -7,8 +7,8 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{geometry}
 \usepackage{cleveref}
+\usepackage{geometry}
 \usepackage{enumitem}
 \usepackage{booktabs}
 
@@ -17,15 +17,19 @@
 % Title Page
 \title{Dysruption - Action Analysis}
 \author{Rishitosh Kumar Singh}
+\affil{Arizona State University}
+
 \date{\today}
 
 \begin{document}
 
 \maketitle
+\tableofcontents
+\clearpage
 
-\section{Introduction}
-\label{sec:introduction}
-    This report presents the work done over the semester on a project focused on analyzing decision-making strategies within critical infrastructure networks through interactive simulation games. The main objective was to design and develop bots that could autonomously play two online strategy games—\textit{Break it Bad} and \textit{Save Our System (Scenario 1)} and evaluate their performance by recording and analyzing their actions and corresponding scores.
+\chapter{Introduction}
+\label{chap:introduction}
+    This report presents the work conducted over the semester on a project focused on analyzing decision-making strategies within critical infrastructure networks through interactive simulation games. The primary objective was to design and develop autonomous bots capable of playing two online strategy games—\textit{Break it Bad} and \textit{Save Our System (Scenario 1)}—and to evaluate their performance by recording and analyzing their actions and corresponding scores.
 
     \begin{figure}[h!]
         \centering
@@ -34,20 +38,20 @@
         \label{fig:game-graph}
     \end{figure}
 
-    Both games simulate a fuel transportation network composed of supply nodes, demand nodes, and connecting pipelines. In \textit{Break it Bad}, the player's goal is to disrupt the network as effectively as possible using a limited number of actions. Success is measured by how much cost is inflicted on the system by strategically damaging pipelines and cutting off supply routes. In contrast, \textit{Save Our System} challenges players to preserve network stability in the face of potential disasters. Here, the goal is to mitigate risk, prepare for unpredictable events, and ensure uninterrupted fuel flow at minimal cost.
+    Both games simulate a fuel transportation network composed of supply nodes, demand nodes, and connecting pipelines. In \textit{Break it Bad}, the objective is to disrupt the network as effectively as possible using a limited number of actions. Success is measured by the cost inflicted on the system through strategically damaging pipelines and cutting off supply routes. In contrast, \textit{Save Our System} challenges players to maintain network stability in the face of potential disasters. The objective in this game is to mitigate risk, prepare for unpredictable events, and ensure uninterrupted fuel flow at minimal cost
 
     The project aimed to:
     \begin{itemize}
-        \item Build autonomous bots to play both games using rule-based strategies.
+        \item Develop autonomous bots to play both games using rule-based strategies.
         \item Record the sequence of actions taken and the resulting scores.
         \item Analyze how different types of actions influence system performance under various conditions.
     \end{itemize}
 
-    To achieve this, object-oriented programming principles were used to structure the bots, making them modular, extensible, and easy to test. A logging system was also developed to capture data from each gameplay session. This report details the design process, implementation logic, analysis methods, and the insights gained through experiments with different bot strategies.
+    To accomplish these objectives, object-oriented programming principles were applied to structure the bots, ensuring modularity, extensibility, and ease of testing. Additionally, a logging system was developed to capture data from each gameplay session. This report outlines the design process, implementation logic, analysis methods, and the insights gained through experiments with different bot strategies.
 
-\section{Game and Bot Framework}
-\label{sec:game-bot-framework}
-    There are a total of $10$ games that a user can play, but this semester I only worked on two of them as discussed in \cref{sec:introduction}. So, to make the project and modular bot framework extensible, I designed the codebase to be adaptable to various strategies and gameplay logic. The project is structured around a base class \texttt{DysruptionGame}, which encapsulates shared behavior such as browser login, map interaction, state inspection, and common game utilities. This base class is extended by two specialized subclasses: \texttt{BreakItBad} and \texttt{SaveOurSystem}, each implementing game-specific strategies. This design allows for easy swapping of strategies and analysis of performance data across multiple simulation runs and also makes it easy to add new games in the future for their analysis. The more details are given in \cref{sec:appendix-bot-framework}.
+\chapter{Game and Bot Framework}
+\label{chap:game-bot-framework}
+    There are a total of $10$ games available for users to play, but this semester the focus was on two of them, as discussed in \cref{chap:introduction}. To ensure that the project and modular bot framework are extensible, the codebase was designed to accommodate various strategies and gameplay logic. The project is structured around a base class, \texttt{DysruptionGame}, which encapsulates shared functionalities such as browser login, map interaction, state inspection, and common game utilities. This base class is further extended by two specialized subclasses: \texttt{BreakItBad} and \texttt{SaveOurSystem}, each implementing game-specific strategies. This design facilitates easy swapping of strategies and analysis of performance data across multiple simulation runs, while also enabling the addition of new games in the future for analysis. More details are provided in \cref{sec:appendix-bot-framework}.
 
     \begin{figure}[h!]
         \centering
@@ -56,53 +60,62 @@
         \label{fig:class-diagram}
     \end{figure}
 
-\section{Bot Action Logics}
-\label{sec:bot-action-logics}
-    For each game, I have given the bot a set of action logics to choose from. The bot can be configured with various decision logics, referred to as “intelligence levels” different for each games. These include:
-    \begin{itemize}
-        \item \textbf{Break It Bad}:
-        \begin{itemize}
-            \item \textbf{not\_dumb}: Will take action as a normal user, but the bot still doesn't know which action will give the highest score.
-            \item \textbf{dumb}: The bot will act as dumb, meaning it can take action which a normal user will never take which will give it no boost in score.
-        \end{itemize}
+    \section{Bot Action Logics}
+    \label{sec:bot-action-logics}
+        For each game, the bot was designed with a set of action logics to choose from. The bot can be configured with various decision logics, referred to as “intelligence levels,” which differ for each game. These intelligence levels are outlined as follows:
         
-        \item \textbf{Save Our System}:
         \begin{itemize}
-            \item \textbf{only\_maintain}: Only perform the maintain action on the selected edge if the bot randomly decides to take action.
-            \item \textbf{only\_replace}: Only perform the replace action on the selected edge if the bot randomly decides to take action.
-            \item \textbf{only\_repair}: Only perform the repair action on the selected edge if the bot randomly decides to take action.
-            \item \textbf{weighted\_random}: If the bot randomly decides to take action, then if edge's:
+            \item \textbf{Break It Bad}:
+            \begin{itemize}
+                \item \textbf{not\_dumb}: Acts similarly to a typical user, although the bot does not have the ability to determine which action will yield the highest score.
+                \item \textbf{dumb}: Takes actions without considering their effectiveness, including moves that a regular user would typically avoid, resulting in no improvement in score.
+            \end{itemize}
+            
+            \item \textbf{Save Our System}:
+            \begin{itemize}
+                \item \textbf{only\_maintain}: Always performs the maintain action on the selected edge if the bot randomly decides to act.
+                \item \textbf{only\_replace}: Always performs the replace action on the selected edge if the bot randomly decides to act.
+                \item \textbf{only\_repair}: Always performs the repair action on the selected edge if the bot randomly decides to act.
+                \item \textbf{weighted\_random}: Chooses an action based on the condition of the edge (FCI) and the available budget:
                 \begin{itemize}
-                    \item FCI \(\geq 99.6\) and the cost of maintaining it is within the budget, perform the maintain action
-                    \item \(92 \leq \) FCI \(< 99.6\) and the cost of repairing it is within the budget, perform the repair action
-                    \item  FCI \(< 92\) and the cost of replacing the edge is within the budget, perform the replace action
+                    \item If the FCI $\geq 99.6$ and the cost of maintenance is within the budget, performs the maintain action.
+                    \textit{(Rationale: At this level, the pipeline is nearly perfect, so maintaining it helps prolong its optimal condition, preventing future degradation.)}
+
+                    \item If $ 92 \leq$ FCI $< 99.6$ and the cost of repair is within the budget, performs the repair action.
+                    \textit{(Rationale: This range indicates that the pipeline is functioning but showing signs of wear. Repairs can restore it to a more robust state without incurring the high costs of replacement.)}
+
+                    \item If FCI $< 92$ and the cost of replacement is within the budget, performs the replace action.
+                    \textit{(Rationale: A low FCI suggests significant wear or damage. Replacing the pipeline ensures long-term reliability, especially when incremental repairs are not sufficient.)}
+
                 \end{itemize} 
-        \end{itemize}
-    \end{itemize}  
+            \end{itemize}
+        \end{itemize}  
 
-    \begin{figure}[!htbp]
-        \centering
-        \includegraphics[width=0.8\textheight, angle=90]{images/bot-logic.png}
-        \caption{Flowchart illustrating the decision-making logic of the bots for both games. The center white box is implemented in the \texttt{bot.py} and \texttt{bot-savepursystem.py} files. The other two boxes are implemented in their respective game classes in \texttt{src/game.py}.}
-        \label{fig:bot-logic}
-    \end{figure}
+        The bot’s decision-making process, as illustrated in \cref{fig:bot-logic}, is structured as a series of logical steps that guide its actions during gameplay. The flowchart provides a clear visual representation of how the bot evaluates the game state, selects an action, and executes it.
 
-    \section{Result and Analysis}
-    \label{sec:score-analysis}
-        \subsection{Break It Bad}
+        \begin{figure}[!htbp]
+            \centering
+            \includegraphics[width=0.8\textheight, angle=90]{images/bot-logic.png}
+            \caption{Flowchart illustrating the decision-making logic of the bots for both games. The central white box is implemented in the \texttt{bot.py} and \texttt{bot-savepursystem.py} files, while the other two boxes are implemented within their respective game classes in \texttt{src/game.py}.}
+            \label{fig:bot-logic}
+        \end{figure}
 
-        To evaluate the performance of the bot in the \textit{Break It Bad} game, I ran the bot in \texttt{not\_dumb} intelligence mode for approximately 500 game simulations. In each simulation, the bot executed a series of up to 5 moves, and after every move, the resulting score was recorded. The goal was to analyze how the score evolved with each action and to identify the move sequences that led to the highest disruption scores. 
+    \chapter{Result and Analysis}
+    \label{chap:score-analysis}
+        \section{Break It Bad}
+
+        To evaluate the performance of the bot in the \textit{Break It Bad} game, the bot was run in \texttt{not\_dumb} intelligence mode for approximately 500 game simulations. In each simulation, the bot performed up to 5 moves, and the resulting score was recorded after each move. The objective was to analyze the progression of scores with each action and to identify the move sequences that resulted in the highest disruption scores.
 
         \begin{figure}[h!]
             \centering
             \includegraphics[width=\textwidth]{images/kde-breakitbad.png}
-            \caption{KDE plot showing the distribution of scores after each move over 500 simulations (max 5 moves shown). Higher density towards the right indicates increasing score trends.}
+            \caption{KDE plot showing the distribution of scores after each move over 500 simulations (maximum of 5 moves shown). Higher density towards the right indicates increasing score trends.}
             \label{fig:kde-breakitbad}
         \end{figure}
 
-        As shown in \cref{fig:kde-breakitbad}, the KDE plots illustrate how the score distribution evolves with each move. Initially, the scores are tightly concentrated, but as the game progresses, the curves broaden and shift toward higher values, indicating increasing disruption. By Move 4 and Move 5, the distributions become noticeably wider and begin to exhibit bi-modal characteristics.
+        As shown in \cref{fig:kde-breakitbad}, the KDE plots illustrate how the score distribution changes with each move. Initially, the scores are tightly concentrated, but as the game progresses, the distributions broaden and shift toward higher values, indicating increasing disruption. By Move 4 and Move 5, the distributions become significantly wider and start to exhibit bi-modal characteristics.
 
-        To further understand the bot's decision-making, I extracted the sequence of moves that led to the highest score after 5 moves. The maximum score achieved was \textbf{113}. The corresponding sequence of moves is reported in \cref{tab:breakitbad-moves}. Each entry in the table represents an edge that was attacked during the game. The edges are represented as pairs of nodes, indicating the connections that were targeted.
+        To gain deeper insights into the bot’s decision-making process, the sequence of moves leading to the highest score after 5 moves was extracted. The maximum score achieved was \textbf{113}. The corresponding move sequence is presented in \cref{tab:breakitbad-moves}, where each entry represents an edge that was attacked during the game. The edges are denoted as pairs of nodes, indicating the targeted connections.
 
         \begin{table}[h!]
             \centering
@@ -117,73 +130,83 @@
             5 & \texttt{5 <-> 9} \\
             \bottomrule
             \end{tabular}
-            \caption{Sequence of moves leading to the highest score in \textit{Break It Bad}. Here, each entry \texttt{x <-> y} represents an attack on the pipeline (edge) connecting node \texttt{x} to node \texttt{y}.}
+            \caption{Sequence of moves leading to the highest score in \textit{Break It Bad}. Each entry \texttt{x <-> y} represents an attack on the pipeline (edge) connecting node \texttt{x} to node \texttt{y}.}
             \label{tab:breakitbad-moves}
         \end{table}
+            
+        % These results highlight that specific combinations of edges consistently result in greater disruption, offering insights into the network’s most vulnerable points when targeted early.
+            
+        \section{Save Our System}
 
-        % These results highlight that certain edge combinations consistently resulted in greater disruption and provide insight into which parts of the network are most vulnerable when targeted early.
-        \subsection{Save Our System}
-        To evaluate different bot strategies in the \textit{Save Our System} game, I tested all four intelligence levels from \cref{sec:bot-action-logics}, with approximately 20 trials for each and the bot’s actions and resulting scores were recorded after each game step. The best scores for each strategy are reported in \cref{tab:strategy-comparison}. Then the results of all the scenario is aggregated and analyzed and I identified the best-performing strategy based on the highest final score achieved.
+        To assess different bot strategies in the \textit{Save Our System} game, all four intelligence levels from \cref{sec:bot-action-logics} were tested, with approximately $20-30$ trials conducted for each strategy. The bot’s actions and resulting scores were recorded after each game step. The best scores for each strategy are summarized in \cref{tab:strategy-comparison}. The results from all scenarios were then aggregated and analyzed to determine the best-performing strategy based on the highest final score achieved.
 
-        \begin{table}
+        \begin{table}[h!]
             \centering
             \begin{tabular}{lc}
-                \toprule
-                \textbf{Strategy} & \textbf{Max Score Achieved} \\
-                \midrule
-                only\_maintain & 19 \\
-                only\_repair & 15 \\
-                only\_replace & 20 \\
-                \textbf{weighted\_random} & \textbf{22} \\
-                \bottomrule
+            \toprule
+            \textbf{Strategy} & \textbf{Max Score Achieved} \\
+            \midrule
+            only\_maintain & 19 \\
+            only\_repair & 15 \\
+            only\_replace & 20 \\
+            \textbf{weighted\_random} & \textbf{28} \\
+            \bottomrule
             \end{tabular}
-            \caption{Summary of maximum scores achieved by different strategies in the \textit{Save Our System} game.}
+            \caption{Summary of the maximum scores achieved by different strategies in the \textit{Save Our System} game.}
             \label{tab:strategy-comparison}
         \end{table}
+            
+            % These results indicate that the \textbf{weighted_random} strategy consistently outperforms the other strategies, achieving the highest maximum score. This suggests that dynamically adjusting actions based on edge conditions and budget availability is more effective compared to using a fixed action strategy.
 
-        \begin{table}
+        \begin{table}[h!]
             \centering
             \begin{tabular}{ccp{12cm}}
             \toprule
             \textbf{Move} & \textbf{Score} & \textbf{Actions Taken} \\
             \midrule
-            1 & 3 & MAINTAIN: 11\texttt{$\leftrightarrow$}7, 6\texttt{$\leftrightarrow$}5, 14\texttt{$\leftrightarrow$}13, 2\texttt{$\leftrightarrow$}1, 5\texttt{$\leftrightarrow$}9, 4\texttt{$\leftrightarrow$}1, 12\texttt{$\leftrightarrow$}8, 10\texttt{$\leftrightarrow$}14 \\
-            2 & 6 & MAINTAIN: 5\texttt{$\leftrightarrow$}9, 14\texttt{$\leftrightarrow$}13, 13\texttt{$\leftrightarrow$}12, 9\texttt{$\leftrightarrow$}10, 4\texttt{$\leftrightarrow$}1 \\
-            3 & 7 & MAINTAIN: 9\texttt{$\leftrightarrow$}12, 10\texttt{$\leftrightarrow$}14, 4\texttt{$\leftrightarrow$}1 \\
-            4 & 10 & REPAIR: 7\texttt{$\leftrightarrow$}3, REPLACE: 12\texttt{$\leftrightarrow$}8, MAINTAIN: 9\texttt{$\leftrightarrow$}10, 10\texttt{$\leftrightarrow$}14, 14\texttt{$\leftrightarrow$}13, 6\texttt{$\leftrightarrow$}5 \\
-            5 & 11 & MAINTAIN: 10\texttt{$\leftrightarrow$}14, 14\texttt{$\leftrightarrow$}13, REPAIR: 7\texttt{$\leftrightarrow$}3 \\
-            6 & 14 & REPLACE: 11\texttt{$\leftrightarrow$}7, MAINTAIN: 10\texttt{$\leftrightarrow$}14, REPAIR: 8\texttt{$\leftrightarrow$}4 \\
-            7 & 17 & REPAIR: 5\texttt{$\leftrightarrow$}9, 2\texttt{$\leftrightarrow$}1, MAINTAIN: 10\texttt{$\leftrightarrow$}14 \\
-            8 & 20 & MAINTAIN: 10\texttt{$\leftrightarrow$}14, REPLACE: 14\texttt{$\leftrightarrow$}13, REPAIR: 2\texttt{$\leftrightarrow$}3 \\
-            9 & 21 & REPAIR: 2\texttt{$\leftrightarrow$}1, REPAIR: 7\texttt{$\leftrightarrow$}3 \\
-            10 & 22 & REPAIR: 6\texttt{$\leftrightarrow$}5, 9\texttt{$\leftrightarrow$}12, MAINTAIN: 14\texttt{$\leftrightarrow$}13, 10\texttt{$\leftrightarrow$}14, REPAIR: 12\texttt{$\leftrightarrow$}8 \\
+            1 & 3 & MAINTAIN: 10\texttt{$\leftrightarrow$}11, 7\texttt{$\leftrightarrow$}6, 10\texttt{$\leftrightarrow$}14, 14\texttt{$\leftrightarrow$}13, 2\texttt{$\leftrightarrow$}1 \\
+            2 & 6 & MAINTAIN: 4\texttt{$\leftrightarrow$}1, 11\texttt{$\leftrightarrow$}7, 7\texttt{$\leftrightarrow$}6 \\
+            3 & 9 & MAINTAIN: 14\texttt{$\leftrightarrow$}13, 12\texttt{$\leftrightarrow$}8, 9\texttt{$\leftrightarrow$}12, 2\texttt{$\leftrightarrow$}1, 11\texttt{$\leftrightarrow$}7 \\
+            4 & 12 & REPAIR: 9\texttt{$\leftrightarrow$}10, REPLACE: 2\texttt{$\leftrightarrow$}3, MAINTAIN: 2\texttt{$\leftrightarrow$}1, REPAIR: 5\texttt{$\leftrightarrow$}9, MAINTAIN: 14\texttt{$\leftrightarrow$}13 \\
+            5 & 15 & REPAIR: 6\texttt{$\leftrightarrow$}5, MAINTAIN: 11\texttt{$\leftrightarrow$}7, REPLACE: 4\texttt{$\leftrightarrow$}5 \\
+            6 & 18 & REPAIR: 5\texttt{$\leftrightarrow$}9, REPAIR: 10\texttt{$\leftrightarrow$}14, MAINTAIN: 11\texttt{$\leftrightarrow$}7 \\
+            7 & 21 & REPAIR: 12\texttt{$\leftrightarrow$}8, REPAIR: 9\texttt{$\leftrightarrow$}12, REPAIR: 13\texttt{$\leftrightarrow$}12 \\
+            8 & 24 & REPAIR: 7\texttt{$\leftrightarrow$}3, REPAIR: 9\texttt{$\leftrightarrow$}12, REPAIR: 2\texttt{$\leftrightarrow$}3, REPAIR: 10\texttt{$\leftrightarrow$}14, REPAIR: 10\texttt{$\leftrightarrow$}11 \\
+            9 & 27 & REPLACE: 14\texttt{$\leftrightarrow$}13, REPAIR: 7\texttt{$\leftrightarrow$}6, REPAIR: 11\texttt{$\leftrightarrow$}7, REPAIR: 13\texttt{$\leftrightarrow$}12 \\
+            10 & 28 & REPLACE: 4\texttt{$\leftrightarrow$}5, REPAIR: 4\texttt{$\leftrightarrow$}1, REPAIR: 10\texttt{$\leftrightarrow$}11, REPAIR: 11\texttt{$\leftrightarrow$}7 \\
             \bottomrule
             \end{tabular}
-            \caption{Score Progression of Best Trial for \textit{Save Our System} Game. The table shows the score after each move and the actions taken. The actions are categorized as MAINTAIN, REPAIR, or REPLACE. Here, each entry \texttt{x <-> y} represents an attack on the pipeline (edge) connecting node \texttt{x} to node \texttt{y}.}
+            \caption{Score progression of the best trial for the \textit{Save Our System} game. The table displays the score after each move and the corresponding actions taken. The actions are categorized as MAINTAIN, REPAIR, or REPLACE. Each entry \texttt{x <-> y} represents an action performed on the pipeline (edge) connecting node \texttt{x} to node \texttt{y}.}
             \label{tab:score-progression}
         \end{table}
 
-        \Cref{tab:score-progression} highlights how the best move in \texttt{weighted\_random} strategy progressively improved the score with a balanced mix of maintenance, repair, and replacement actions. The score increase aligns with strategically targeting weakened or high-impact pipelines, showcasing this strategy’s adaptability.
+        \Cref{tab:score-progression} highlights how the best move sequence in the \texttt{weighted\_random} strategy, in which the bot dynamically chooses actions based on the Failure Condition Index (FCI) of each pipeline segment and the available budget. This strategy outperformed other fixed-action methods, achieving a maximum score of $28$. The success of this approach lies in its ability to balance maintenance, repair, and replacement actions according to the pipeline’s condition.
+
+        The effectiveness of the weighted random strategy can be attributed to its adaptive nature. By continuously assessing the condition of each pipeline and weighing the costs of potential actions, the bot optimizes resource allocation. This balanced approach is crucial in managing critical infrastructure, where maintaining optimal performance with limited resources is a constant challenge.
+
+        In the early game (moves 1-3), the bot primarily performed maintenance actions to preserve high-FCI pipelines, preventing premature deterioration and ensuring cost-effective long-term stability. As the game progressed (moves 4-7), the bot adapted by prioritizing repairs when FCI dropped below $99.6$, effectively restoring moderately degraded pipelines without incurring replacement costs. In the late game (moves 8-10), the bot focused on replacing severely degraded pipelines (FCI $< 92$) when repairs became inefficient, ensuring that critical failures were addressed in a budget-optimized manner.
+
+    \chapter{Conclusion and Future Work}
+    \label{chap:conclusion-future-work}
+        
+        In conclusion, the project provided a valuable learning experience, resulting in the development of a modular bot framework that can be extended to incorporate additional games in the future if needed. For this semester, the development of the bots for the \textit{Break It Bad} and \textit{Save Our System} games was completed successfully, with both bots functioning as expected. The bots demonstrated the ability to play the games using different strategies and intelligence levels as specified in the project requirements.
+        
+        For future work, the \textit{Save Our System} game bot can be further enhanced by incorporating reinforcement learning (RL) to improve decision-making. Instead of predefining strategies such as “only\_maintain” or “only\_replace,” the bot could autonomously learn optimal moves through continuous gameplay. Using RL, the bot would explore various actions, and after each iteration, it would learn which moves yield the best rewards. After several hundred iterations, the bot would develop a robust policy to optimize gameplay, eliminating the need for manually defining strategies and allowing the bot to adapt to the game’s random environment.
+        
+        Since the project follows a modular architecture, developing an RL-based bot for the \textit{Save Our System} game would be relatively straightforward. The bot framework’s extensible design allows for the seamless integration of new games and strategies, enabling further exploration of advanced decision-making algorithms in future projects.
 
 
-    \section{Conclusion and Future Work}
-    \label{sec:conclusion-future-work}
-        To conclude, the project was a great learning experience in which I have created a bot framework that can be further extended to add more games in the future, if needed. For this semester the development of BreakItBad and SaveOurSystem game bots is complete and they are working as expected. The bots were able to play the games with different strategies and intelligence level as per the given requirements.
-
-        For future work, The SaveOurSystem game bot can be improved to get more information about the best moves to make. This can be done by using reinforcement learning. Using this approach, we don't have to device the strategy for the bot like "only\_maintain", "only\_replace", etc. The bot will keep on playing the games, and will explore each and every move. After every iteration the bot will learn which move will give him best reward. After several hundred iterations, the bot will learn the best policy to play the game and then we can judge the bot which action to take. This approach will be best for this game as the this game environment is random, and to get fruitful results, we don't have to define the strategy for the bot but let the bot explore the game and learn from it.
-
-\section{Acknowledgements}
-    \label{sec:acknowledgements}
-    I would like to thank Dr. Thomas Seager for giving me an opportunity to assist in his research project. His guidance and inputs helped shape the direction of the work and ensured its successful completion. I would also like to thank Mazin Abdel Magid for explaining the project and it's requirements in detail.
+    \chapter{Acknowledgements}
+    \label{chap:acknowledgements}
+        
+        The author would like to express gratitude to Dr. Thomas Seager for providing the opportunity to contribute to his research project. His guidance and insights were instrumental in shaping the direction of the work and ensuring its successful completion. Appreciation is also extended to Mazin Abdel Magid for providing detailed walkthroughs of the project and its requirements, which greatly facilitated the development process.
 
     \clearpage
-% Removed \newpage as it is unnecessary or misplaced
-\section*{Appendix}
-\addcontentsline{toc}{section}{Appendix}
-\appendix
-    \section{Repository Structure}
-    Here I will give the structure of the repository and a brief description of each file and folder. And how to use, and where make changes if needed.
 
+\appendix
+    \chapter{Repository Structure}
+
+    This chapter provides an overview of the repository structure along with a brief description of each file and folder. It also includes guidelines on how to use the repository and where to make changes if needed.
     \dirtree{%
         .1 /.
         .2 config.
@@ -205,153 +228,154 @@
     The details of the files and folders are as follows:
 
     \begin{itemize}
-        \item \textbf{config/}: Contains the configuration files for each game that the bot reads. It contains some settings that the bot needs to run. Each game have its own configuration file. In this the user can change number of trials to run, the game URL, and the bot's intelligence level.
-            \begin{itemize}
-                \item \texttt{break\_it\_bad.py}: Configuration file for the \texttt{BreakItBad} game.
-                \item \texttt{save\_our\_system.py}: Configuration file for the \texttt{SaveOurSystem} game.
-            \end{itemize}
-        \item \textbf{src/}: Source code for the bot framework and game-specific implementations.
-            \begin{itemize}
-                \item \texttt{game.py}: This is main game file where the base game class and BreakItBad, SaveOurSystem derived game classes are defined. If any new game needs to be added, it can be added in this file.
-                \item \texttt{utils/}: This folder contains the utility files like data classes to save Node and Edges data, and some constants used in game.
-            \end{itemize}
-        \item \textbf{bot.py}: The bot file for BreakItBad game. To run this game simply run it in ternminal using \texttt{python3 bot.py} command.
-        \item \textbf{bot-saveoursystem.py}: The bot file for BreakItBad game. To run this game simply run it in ternminal using \texttt{python3 bot-saveoursystem.py} command.
-        \item \texttt{requirements.txt}: List of Python dependencies required to run the project. It can be used to create python environment for this project.
+        \item \textbf{config/}: Contains configuration files for each game that the bot reads. These files include settings necessary for the bot’s operation. Each game has its own configuration file, allowing users to adjust parameters such as the number of trials, the game URL, and the bot’s intelligence level.
+        \begin{itemize}
+            \item \texttt{break\_it\_bad.py}: Configuration file for the \texttt{BreakItBad} game.
+            \item \texttt{save\_our\_system.py}: Configuration file for the \texttt{SaveOurSystem} game.
+        \end{itemize}
+        \item \textbf{src/}: Contains the source code for the bot framework and game-specific implementations.
+        \begin{itemize}
+            \item \texttt{game.py}: The main game file where the base game class and the derived classes (\texttt{BreakItBad} and \texttt{SaveOurSystem}) are defined. New games can be added by defining them in this file.
+            \item \texttt{utils/}: Contains utility files such as data classes for storing node and edge data, as well as constants used within the games.
+        \end{itemize}
+        \item \textbf{bot.py}: The bot script for the \texttt{BreakItBad} game. To run the bot, execute the command \texttt{python3 bot.py} in the terminal.
+        \item \textbf{bot-saveoursystem.py}: The bot script for the \texttt{SaveOurSystem} game. To run the bot, execute the command \texttt{python3 bot-saveoursystem.py} in the terminal.
+        \item \texttt{requirements.txt}: A file listing the Python dependencies required to run the project. This file can be used to set up a Python environment for the project.
     \end{itemize}
 
-
-    \section{Detailed Bot Framework Design}
+    \chapter{Detailed Bot Framework Design}
     \label{sec:appendix-bot-framework}
 
-    \subsection*{Class Design}
+    \section*{Class Design}
     \label{subsec:class-design}
 
-    The codebase is centered around a base class \texttt{DysruptionGame}, which encapsulates shared behavior such as browser login, map interaction, state inspection, and common game utilities. This base class is extended by two specialized subclasses:
+    The codebase is structured around a base class, \texttt{DysruptionGame}, which encapsulates common functionalities such as browser login, map interaction, state inspection, and utility functions used across different games. This base class is extended by two specialized subclasses:
+
     \begin{itemize}
-        \item \texttt{BreakItBad}: Implements logic to attack pipelines and maximize disruption.
-        \item \texttt{SaveOurSystem}: Focuses on maintenance and repair actions under a constrained budget.
+        \item \texttt{BreakItBad}: Implements logic to attack pipelines with the goal of maximizing disruption.
+        \item \texttt{SaveOurSystem}: Focuses on maintenance and repair actions while operating under a constrained budget.
     \end{itemize}
 
-    Each subclass overrides and extends the behavior of the base class to implement game-specific strategies, including action selection and score retrieval.
+    Each subclass overrides and extends the functionality of the base class to implement game-specific strategies, including decision-making processes for action selection and score retrieval.
 
-    \subsection*{Class: DysruptionGame}
+    \section*{Class: DysruptionGame}
     \label{subsec:class-dysruptiongame}
 
-    The \texttt{DysruptionGame} class serves as the foundational blueprint for automating interactions with the simulation games. It abstracts repetitive tasks such as navigating the game UI, extracting map state, and performing actions. Below is a summary of its core components and functions:
+        The \texttt{DysruptionGame} class serves as the foundational blueprint for automating interactions within the simulation games. It abstracts repetitive tasks such as navigating the game user interface, extracting the current map state, and executing actions. Below is a summary of its core components and functions:
 
-    \begin{itemize}
-        \item \textbf{Constructor (\_\_init\_\_)}: Initializes the game by setting the URL, intelligence strategy, and configuration flags. It also launches the game and prepares the node/edge storage.
-        
-        \item \textbf{reset\_game(first\_run=False)}: Opens the game in a browser and waits for key UI elements to load. If it's the first run, it waits for the login prompt; otherwise, it waits for the intro banner.
+        \begin{itemize}
+            \item \textbf{Constructor (\_\_init\_\_)}: Initializes the game by setting the URL, intelligence strategy, and configuration flags. It also launches the game and prepares storage for nodes and edges.
+            
+            \item \textbf{reset\_game(first\_run=False)}: Opens the game in a browser and waits for key UI elements to load. If it is the first run, it waits for the login prompt; otherwise, it waits for the introductory banner.
 
-        \item \textbf{initiliaze\_edges\_nodes()}: Initializes empty lists to hold node and edge objects before parsing the game state.
+            \item \textbf{initialize\_edges\_nodes()}: Prepares empty lists to store node and edge objects before parsing the game state.
+            
+            \item \textbf{login()}: Enters the username in the designated field and submits the login form to access the game environment.
+            
+            \item \textbf{start\_game()}: Waits for the introductory banner and map buttons to load, then clicks through to initiate the game.
+            
+            \item \textbf{activate\_map\_read\_mode()}: Activates read mode by selecting the map option, allowing the bot to read and collect edge and node information.
+            
+            \item \textbf{find\_edges()}: Identifies all visible pipeline edges on the map and retrieves their visual properties (such as flow direction and status) to initialize them as \texttt{Edge} objects.
+            
+            \item \textbf{find\_edges\_state()}: Inspects each edge individually to extract additional metadata from the inspector panel, including attributes like temperature, flow, and the Failure Condition Index (FCI).
+            
+            \item \textbf{find\_nodes()}: Detects all nodes on the map, classifying them as either supply or demand based on their visual appearance.
+            
+            \item \textbf{find\_nodes\_state()}: Gathers detailed information for each node, including attributes such as name, penalty, demand, or shortfall, by examining the inspector panel.
+            
+            \item \textbf{random\_action()}: Returns \texttt{True} or \texttt{False} based on a predefined probability threshold, allowing the bot to make probabilistic decisions.
+            
+            \item \textbf{action()}: Ensures the game’s user interface is ready before performing the next action, adding a controlled delay between bot moves.
+            
+            \item \textbf{quit()}: Closes the browser session in a clean and orderly manner.
+        \end{itemize}
 
-        \item \textbf{login()}: Fills in the username field and submits the login form to enter the game environment.
-
-        \item \textbf{start\_game()}: Waits for the intro banner and map buttons to load, then clicks through to start the game.
-
-        \item \textbf{activate\_map\_read\_mode()}: Enables read mode by clicking the map selector, which allows edge and node information to be read.
-
-        \item \textbf{find\_edges()}: Finds all visible pipeline edges on the map and reads their visual properties (e.g., flow direction and status) to initialize them as \texttt{Edge} objects.
-
-        \item \textbf{find\_edges\_state()}: Clicks each edge to extract additional metadata from the inspector panel such as temperature, flow, and FCI (Failure Condition Index).
-
-        \item \textbf{find\_nodes()}: Detects all nodes on the map and classifies them as supply or demand based on visual styles.
-
-        \item \textbf{find\_nodes\_state()}: Extracts detailed data for each node (like name, penalty, demand, or shortfall) by reading the inspector panel.
-
-        \item \textbf{random\_action()}: Returns \texttt{True} or \texttt{False} based on a threshold probability. Useful for making bots act probabilistically.
-
-        \item \textbf{action()}: Waits for the game’s UI to be ready before allowing the next action. Used to introduce pacing between bot moves.
-
-        \item \textbf{quit()}: Shuts down the browser session cleanly.
-    \end{itemize}
-
-    By consolidating this core functionality, the class serves as a reliable and reusable foundation for building bots for multiple games.
+        By consolidating these core functionalities, the class serves as a reliable and reusable foundation for developing bots for multiple games, enabling efficient extension and adaptation to new game environments.
 
 
-    \subsection*{Class: BreakItBad}
+    \section*{Class: BreakItBad}
     \label{subsec:class-breakitbad}
 
-        The \texttt{BreakItBad} class extends the base \texttt{DysruptionGame} class to implement logic specific to the "Break it Bad" game scenario. In this game, the objective is to disrupt the fuel distribution network as much as possible within a limited number of moves.
+        The \texttt{BreakItBad} class extends the base \texttt{DysruptionGame} class to implement logic specific to the \textit{Break it Bad} game scenario. In this game, the objective is to maximize disruption within the fuel distribution network using a limited number of moves.
 
         Key components of the class include:
 
         \begin{itemize}
-            \item \textbf{Constructor (\_\_init\_\_)}: Initializes the inherited attributes and settings for the BreakItBad game.
+            \item \textbf{Constructor (\_\_init\_\_)}: Initializes the inherited attributes and configurations specifically for the \texttt{BreakItBad} game.
 
-            \item \textbf{initiliaze\_edges\_nodes()}: Overrides the base method to additionally prepare separate lists for attacked, not attacked, and off-state edges.
+            \item \textbf{initialize\_edges\_nodes()}: Overrides the base method to additionally set up separate lists for attacked edges, not attacked edges, and edges that are in an off state.
 
-            \item \textbf{get\_score()}: Extracts the current score from the scoreboard element on the page using Selenium.
+            \item \textbf{get\_score()}: Retrieves the current score from the scoreboard element on the game page using Selenium.
 
-            \item \textbf{attack()}: Depending on the selected intelligence strategy, chooses an edge to attack—either randomly or selectively—and executes a simulated click on it.
+            \item \textbf{attack()}: Selects an edge to attack based on the chosen intelligence strategy—either randomly or through a targeted approach—and performs a simulated click on the selected edge.
 
-            \item \textbf{action()}: Executes an attack via the \texttt{attack()} function and then calls the base class's \texttt{action()} method to continue the game loop.
+            \item \textbf{action()}: Initiates an attack using the \texttt{attack()} method and then calls the base class's \texttt{action()} method to maintain the game loop.
 
-            \item \textbf{is\_game\_over()}: Checks whether the game is complete by verifying if all available attackable edges have been used.
+            \item \textbf{is\_game\_over()}: Determines whether the game has concluded by checking if all attackable edges have already been used.
 
-            \item \textbf{filter\_edges()}: Sorts all edges into categories (not attacked, stopped, attacked) based on their current status for better decision-making.
+            \item \textbf{filter\_edges()}: Categorizes edges into distinct groups (not attacked, stopped, attacked) based on their current status to facilitate strategic decision-making.
 
-            \item \textbf{deactivate\_map\_read\_mode()}: Switches off map read mode and enables attack mode by clicking the corresponding UI button.
+            \item \textbf{deactivate\_map\_read\_mode()}: Disables map read mode and activates attack mode by interacting with the corresponding user interface button.
 
-            \item \textbf{get\_state()}: Combines all logic to refresh the current map state, including reading nodes, edges, and their properties. Includes retries to ensure robustness.
+            \item \textbf{get\_state()}: Aggregates all logic to update the current map state, including reading nodes, edges, and their properties. Implements retries to ensure robustness in state retrieval.
         \end{itemize}
 
-        This class encapsulates all behavior specific to the BreakItBad game and provides a structured approach to implementing bot behavior for disruptive gameplay.
+        This class encapsulates all behavior specific to the \textit{BreakItBad} game and provides a structured approach to implementing bot actions aimed at maximizing disruption within the game environment.
 
-
-    \subsection*{Class: SaveOurSystem}
+    \section*{Class: SaveOurSystem}
     \label{subsec:class-saveoursystem}
 
-        The \texttt{SaveOurSystem} class is a subclass of \texttt{DysruptionGame} and implements logic for the defensive gameplay scenario, where the player must maintain and restore a critical fuel network under a constrained budget. It includes multiple types of actions—repair, replace, and maintain—each with different costs and effects.
+        The \texttt{SaveOurSystem} class is a subclass of \texttt{DysruptionGame} that implements logic for a defensive gameplay scenario, where the objective is to maintain and restore a critical fuel network while operating under a constrained budget. The class supports multiple action types—repair, replace, and maintain—each associated with distinct costs and outcomes.
 
         Key components of the class include:
 
         \begin{itemize}
-            \item \textbf{Constructor (\_\_init\_\_)}: Inherits all base parameters and initializes edge categories for this game.
+            \item \textbf{Constructor (\_\_init\_\_)}: Inherits all base parameters from \texttt{DysruptionGame} and initializes edge categories specific to the \textit{Save Our System} game.
 
-            \item \textbf{initiliaze\_edges\_nodes()}: Extends the base method to additionally set up lists for operational and destroyed edges.
+            \item \textbf{initialize\_edges\_nodes()}: Extends the base method to also set up lists for operational and destroyed edges, categorizing them based on their current state.
 
-            \item \textbf{get\_score()}: Extracts the current performance score displayed in the game.
-
-            \item \textbf{get\_budget()}: Reads the current available budget from the game UI, which is needed to decide on allowable actions.
-
-            \item \textbf{perform\_action(edge, action\_button\_selector)}: Clicks the appropriate repair, replace, or maintain button, then applies the action on the selected edge.
-
-            \item \textbf{action()}: Implements strategy-specific logic. Depending on the intelligence mode, the bot chooses which action to perform while staying within the budget. The \texttt{weighted\_random} mode evaluates edge health (FCI) before deciding.
-
-            \item \textbf{is\_game\_over()}: Placeholder check for game-ending condition (inherited from base), though not directly tied to game logic in this case.
-
-            \item \textbf{filter\_edges()}: Classifies edges as destroyed or operational based on their failure index, used to prioritize repairs.
-
-            \item \textbf{get\_state()}: Aggregates all state-gathering steps: node and edge detection, edge detail extraction, and classification.
+            \item \textbf{get\_score()}: Retrieves the current performance score displayed in the game UI.
+            
+            \item \textbf{get\_budget()}: Reads the current available budget from the game interface, which is crucial for determining the feasibility of actions.
+            
+            \item \textbf{perform\_action(edge, action\_button\_selector)}: Clicks the appropriate button (repair, replace, or maintain) and applies the chosen action to the selected edge.
+            
+            \item \textbf{action()}: Implements strategy-specific decision logic. Depending on the selected intelligence mode, the bot chooses the most suitable action while adhering to budget constraints. In the \texttt{weighted\_random} mode, the bot evaluates the edge's health (FCI) before making a decision.
+            
+            \item \textbf{is\_game\_over()}: Serves as a placeholder for the game-ending condition (inherited from the base class), although it is not directly linked to the specific game logic.
+            
+            \item \textbf{filter\_edges()}: Categorizes edges into operational and destroyed based on their failure condition index (FCI), aiding in the prioritization of maintenance and repair.
+            
+            \item \textbf{get\_state()}: Gathers and consolidates the current game state, including node and edge detection, edge status extraction, and classification.
         \end{itemize}
 
-        This class enables simulation of different maintenance strategies and their effectiveness in keeping the network operational despite failures and budget constraints.
+        This class facilitates the simulation of various maintenance strategies and evaluates their effectiveness in maintaining network stability despite failures and budget limitations.
     
-    \subsection*{bot.py and bot-saveoursystem.py}
+    \section*{bot.py and bot-saveoursystem.py}
     \label{subsec:bot-files}
-
-        The \texttt{bot.py} and \texttt{bot-saveoursystem.py} files serve as the entry points for running the bots in their respective games. They create the objects of game classes, and execute the main game loop. The main loop can be visualized in the \cref{fig:bot-logic} flowchart in the center white box.
+        
+        The \texttt{bot.py} and \texttt{bot-saveoursystem.py} files serve as the entry points for running the bots in their respective games. These files instantiate the game class objects and execute the main game loop. The primary loop structure is illustrated in the center white box of the \cref{fig:bot-logic} flowchart.
     
-    \section{How to Run the Project}
+    \chapter{How to Run the Project}
     \label{sec:how-to-run}
-    To run the project, follow these steps:
-    \begin{itemize}
-        \item Clone the repository to your local machine.
-        \item Navigate to the project directory.
-        \item Download chromedriver and place it in the same directory as the project, and update config/breakitbad.py and config/saveoursystem1.py files with the path to the chromedriver.
-        \item Install the required dependencies using:
+    
+        To run the project, follow these steps:
+        
+        \begin{itemize}
+            \item Clone the repository to your local machine.
+            \item Navigate to the project directory.
+            \item Download \texttt{chromedriver} and place it in the project directory. Update the \\ \texttt{config/breakitbad.py} and \texttt{config/saveoursystem1.py} files with the path to the \texttt{chromedriver}.
+            \item Install the required dependencies using:
             \begin{verbatim}
                 pip install -r requirements.txt
             \end{verbatim}
-        \item Change the configuration files in the \texttt{config} folder as per your requirements. The configuration files are:
+            \item Modify the configuration files in the \texttt{config} folder as needed. The configuration files are:
             \begin{itemize}
                 \item \texttt{break\_it\_bad.py}: Configuration file for the \texttt{BreakItBad} game.
                 \item \texttt{save\_our\_system.py}: Configuration file for the \texttt{SaveOurSystem} game.
             \end{itemize}
-        \item Run the bot for the desired game:
+            \item Run the bot for the desired game:
             \begin{verbatim}
                 python3 bot.py
             \end{verbatim}
@@ -359,6 +383,6 @@
             \begin{verbatim}
                 python3 bot-saveoursystem.py
             \end{verbatim}
-    \end{itemize}
+        \end{itemize}
         
 \end{document}
