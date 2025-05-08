@@ -7,33 +7,42 @@ The onr project is a Python application designed to determine the best actions t
 ![Tab Save Our System](report/images/tabsaveoursystem.png)
 
 
-## Installation
-To install the required dependencies, run the following command:
-
-```
-pip install -r requirements.txt
-```
-
 ## Usage
-To run the application, execute the following command:
+To run the project, follow these steps:
 
-```
-python src/main.py
-```
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Download `chromedriver` and place it in the project directory. Update the `config/breakitbad.py` and `config/saveoursystem1.py` files with the path to the `chromedriver`.
+4. Install the required dependencies using:
+    ```bash
+    pip install -r requirements.txt
+    ```
+5. Modify the configuration files in the `config` folder as needed. The configuration files are:
+    - `break_it_bad.py`: Configuration file for the `BreakItBad` game.
+    - `save_our_system.py`: Configuration file for the `SaveOurSystem` game.
+6. Run the bot for the desired game:
+    ```bash
+    python3 bot.py
+    ```
+    or
+    ```bash
+    python3 bot-saveoursystem.py
+    ```
 
 ## Directory Structure
 ```
 onr/
+├── config/
+│   ├── breakitbad.py       # Configuration file for the BreakItBad game
+│   ├── saveoursystem1.py   # Configuration file for the SaveOurSystem game
 ├── src/
-│   ├── main.py        # Entry point of the application
-│   └── utils/
-│       └── helper.py  # Utility functions
-├── requirements.txt    # List of dependencies
-└── setup.py            # Packaging configuration
+│   ├── game.py             # Main game logic
+│   ├── utils/
+│   │   ├── const.py        # Constants used across the project
+│   │   ├── Edge.py         # Edge-related utilities
+│   │   ├── metrics.py      # Metrics calculation utilities
+│   │   └── Node.py         # Node-related utilities
+├── bot.py                  # Bot script for BreakItBad
+├── bot-saveoursystem.py    # Bot script for SaveOurSystem
+├── requirements.txt        # List of dependencies
 ```
-
-## Contributing
-If you would like to contribute to this project, please fork the repository and submit a pull request.
-
-## License
-This project is licensed under the [insert license name, e.g., MIT License].
